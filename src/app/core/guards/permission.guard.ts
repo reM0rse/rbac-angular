@@ -2,29 +2,31 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/authService';
 import { map, take } from 'rxjs/operators';
-import { Role } from '../../shared/utils/enum';
 import { SnackbarUtil } from '../utils/snackbar.util';
 
-export const AuthGuard: CanActivateFn = (route, state) => {
+export const permissionGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const snackbar = inject(SnackbarUtil);
   const router = inject(Router);
-  const requiredRole = route.data['role'];
+  const requiredPermission = route.data['permission'];
 
   return authService.currentUser.pipe(
     take(1),
     map(user => {
+        console.log(user, 'user is');
       if (!user) {
         router.navigate(['/login']);
         return false;
       }
 
-      if (requiredRole && user.role !== requiredRole) {
-        snackbar.error('Access denied: Required role is ' + requiredRole + ' but user has ' + user.role);
+      const hasPermission = user.permissionIds?.includes(requiredPermission);
+      if (!hasPermission) {
+        console.log('You do not have permission to access this page');
+        snackbar.error('You do not have permission to access this page');
         return false;
       }
 
       return true;
     })
   );
-};
+}; 

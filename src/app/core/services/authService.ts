@@ -11,16 +11,17 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  roleId?: number;
+  roleId?: string;
   role: string;
+  permissionIds?: string[];
 }
 export interface Role {
   id: string;
   name: string;
-  permissionIds: number[];
+  permissionIds: string[];
 }
 export interface Permission {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -35,7 +36,11 @@ export class AuthService {
 
 
   constructor(private http: HttpClient,private router: Router) {
-   }
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.currentUserSubject.next(JSON.parse(storedUser));
+    }
+  }
 
    login(username: string, password: string): Observable<{ users: User[] }> {
     return this.http.get<{ users: User[] }>(`${this.apiUrl}/users?username=${username}&password=${password}`)
@@ -66,7 +71,7 @@ export class AuthService {
     return this.http.post<User>(`${this.apiUrl}/users`, user);
   }
   updateUser(id: number, user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/users/${id}`, user);
+    return this.http.patch<User>(`${this.apiUrl}/users/${id}`, user);
   }
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/users/${id}`);
@@ -77,14 +82,14 @@ export class AuthService {
   }
 
   updateRole(roleId: number, role: Role): Observable<Role> {
-    return this.http.put<Role>(`${this.apiUrl}/roles/${roleId}`, role);
+    return this.http.patch<Role>(`${this.apiUrl}/roles/${roleId}`, role);
   }
 
   deleteRole(roleId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/roles/${roleId}`);
   }
 
-  getRolePermissions(roleId: number): Observable<Permission[]> {
+  getRolePermissions(roleId: string): Observable<Permission[]> {
     return this.http.get<Permission[]>(`${this.apiUrl}/roles/${roleId}/permissions`);
   }
 

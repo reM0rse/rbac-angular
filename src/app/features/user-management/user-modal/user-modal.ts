@@ -58,7 +58,8 @@ export class UserModal implements OnInit{
       username: this.form.value.username || '',
       email: this.form.value.email || '',
       password: '',
-      role: this.form.value.role || '', 
+      role: this.form.value.role || '',
+      permissionIds: this.roles.find(role => role.name === this.form.value.role)?.permissionIds || [],
     }).subscribe((data) => {
       this.dialogRef.close(true);
     });
@@ -69,10 +70,11 @@ export class UserModal implements OnInit{
     this.authservice.updateUser(this.data.id, {
       id: this.data.id,
       name: this.form.value.name || '',
-      username: this.form.value.username || '',
       email: this.form.value.email || '',
-      password: '',
       role: this.form.value.role || '',
+      username: this.data.username || '',
+      password: this.data.password || '',
+      permissionIds: this.roles.find(role => role.name === this.form.value.role)?.permissionIds || [],
     }).subscribe((data) => {
       this.dialogRef.close(true);
     });

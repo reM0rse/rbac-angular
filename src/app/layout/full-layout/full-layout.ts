@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavContainer, MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../core/services/authService';
 
 @Component({
   selector: 'app-full-layout',
@@ -28,9 +29,13 @@ export class FullLayout {
   isSmallScreen = false;
   private breakpointObserver = inject(BreakpointObserver);
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       this.isSmallScreen = result.matches;
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

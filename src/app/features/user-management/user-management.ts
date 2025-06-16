@@ -8,18 +8,10 @@ import { UserModal } from './user-modal/user-modal';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../core/services/authService';
-import { Role } from '../../shared/utils/enum';
+import { AuthService, User } from '../../core/services/authService';
+import { Role, Permission } from '../../shared/utils/enum';
 import { SnackbarUtil } from '../../core/utils/snackbar.util';
 import { ConfirmModal, ConfirmModalData } from '../../shared/components/confirm-modal/confirm-modal';
-
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  role: string;
-}
 
 @Component({
   selector: 'app-user-management',
@@ -39,23 +31,36 @@ interface User {
 export class UserManagement implements OnInit {
   http = inject(HttpClient);
   dialog = inject(MatDialog);
-  users: any[] = [];
+  users: User[] = [];
   displayedColumns: string[] = ['name', 'username', 'email', 'role', 'actions'];
   isLoading = false;
+  currentUser: User | null = null;
 
   constructor(
-    private authservice: AuthService,
+    private authService: AuthService,
     private snackbar: SnackbarUtil,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.fetchUsers();
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
+
+  canEditUser(): boolean {
+    return this.currentUser?.permissionIds?.includes(Permission.edit_user) ?? false;
+  }
+
+  canDeleteUser(): boolean {
+    console.log(this.currentUser, 'currentUser is');
+    return this.currentUser?.permissionIds?.includes(Permission.delete_user) ?? false;
   }
 
   fetchUsers() {
     this.isLoading = true;
-    this.authservice.getUsers().subscribe({
+    this.authService.getUsers().subscribe({
       next: (data) => {
         this.users = data;
         this.isLoading = false;
@@ -100,7 +105,7 @@ export class UserManagement implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.authservice.deleteUser(id).subscribe({
+        this.authService.deleteUser(id).subscribe({
           next: () => {
             this.snackbar.success('User deleted successfully');
             this.fetchUsers();

@@ -26,10 +26,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let user">
-          <button mat-icon-button (click)="openForm(user)">
+          <button mat-icon-button (click)="openForm(user)" *ngIf="canEditUser()">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="deleteUser(user.id,user.role)">
+          <button mat-icon-button (click)="deleteUser(user.id,user.role)" *ngIf="canDeleteUser()">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

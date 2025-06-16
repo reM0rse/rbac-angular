@@ -3,6 +3,9 @@ import { LoginComponent } from './features/auth/login/login';
 import { Dashboard } from './features/dashboard/dashboard';
 import { FullLayout } from './layout/full-layout/full-layout';
 import { BlankLayout } from './layout/blank-layout/blank-layout';
+import { Permission, Role } from './shared/utils/enum';
+import { AuthGuard } from './core/guards/auth-guard';
+import { permissionGuard } from './core/guards/permission.guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +19,8 @@ export const routes: Routes = [
           import('./features/user-management/user-management').then(
             (m) => m.UserManagement
           ),
+        canActivate: [permissionGuard],
+        data: { permission: Permission.view_user },
       },
       {
         path: 'role-management',
@@ -23,6 +28,8 @@ export const routes: Routes = [
           import('./features/role-management/role-management').then(
             (m) => m.RoleManagement
           ),
+        canActivate: [AuthGuard],
+        data: { role: Role.SuperAdmin},
       },
       {
         path: 'dashboard',
