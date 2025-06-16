@@ -55,6 +55,12 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
+  // private getPermissions(roleId: string): void {
+  //   this.authService.getRolePermissions(roleId).subscribe((permissions) => {
+  //     localStorage.setItem('permissions', JSON.stringify(permissions));
+  //   });
+  // }
+
   private initForm(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -75,6 +81,10 @@ export class LoginComponent implements OnInit {
               this.snackbar.success('Login successful!');
               this.isLoading = false;
               this.router.navigate(['/dashboard']);
+              const user = data[0];
+              delete user.password;
+              localStorage.setItem('user', JSON.stringify(user));
+              // this.getPermissions(user.roleId || '');
             } else {
               this.snackbar.error('Login failed!');
             }

@@ -91,11 +91,9 @@ export class AuthService {
 
   getRolePermissions(roleId: string): Observable<Permission[]> {
     return this.http.get<Permission[]>(`${this.apiUrl}/roles/${roleId}/permissions`);
-  }
+  } 
 
-  addRolePermission(roleId: number, permissionId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/roles/${roleId}/permissions`, { permissionId });
-  }
+
 
   logout() {
     localStorage.removeItem(this.tokenKey);

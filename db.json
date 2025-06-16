@@ -1,36 +1,41 @@
 {
   "users": [
     {
-      "id": 0,
-      "name": "asdf",
-      "username": "asdf",
-      "email": "ssdf@asdf.com",
-      "password": "",
-      "role": "User"
+      "id": "1ba1676a-8626-40b9-a970-c3e45eeb4d6b",
+      "name": "super admin",
+      "username": "superadmin",
+      "email": "super@admin.com",
+      "password": "admin123",
+      "role": "Super Admin",
+      "roleId": "0",
+      "permissionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
     },
     {
-      "id": 1,
-      "name": "sdf",
-      "username": "admin",
-      "email": "asdflasdf@asdf.com",
-      "password": "",
-      "role": "Super Admin"
+      "id": "e57e5cd6-59da-4e21-aa72-f226c322d8a4",
+      "name": "user",
+      "username": "user",
+      "email": "user@user.com",
+      "password": "user123",
+      "role": "user",
+      "roleId": "151398cd-99b2-48d7-9724-ed007d92bd36",
+      "permissionIds": [
+        "1"
+      ]
     },
     {
-      "id": 2,
-      "name": "asdf",
-      "username": "asdf",
-      "email": "asdf@asdf.com",
-      "password": "",
-      "role": "Admin"
-    },
-    {
-      "id": "79db64b6-2940-4c2f-9def-a24755e0f3ae",
-      "name": "sdfs",
-      "username": "",
-      "email": "sdf@sadf.com",
-      "password": "",
-      "role": "Super Admin"
+      "id": "47896ee6-91f8-4942-bff2-b9afedb861b4",
+      "name": "no user",
+      "username": "nouser",
+      "email": "no@user.com",
+      "password": "nouser123",
+      "role": "no_access",
+      "roleId": "d23e0660-53e6-4dec-b8c8-a4280b60d0f7",
+      "permissionIds": []
     }
   ],
   "roles": [
@@ -40,7 +45,8 @@
       "permissionIds": [
         "1",
         "2",
-        "3"
+        "3",
+        "4"
       ]
     },
     {
@@ -48,33 +54,39 @@
       "name": "admin",
       "permissionIds": [
         "1",
-        "2"
+        "2",
+        "3"
       ]
     },
     {
       "id": "151398cd-99b2-48d7-9724-ed007d92bd36",
       "name": "user",
       "permissionIds": [
-        "1"
+        "2"
       ]
+    },
+    {
+      "id": "d23e0660-53e6-4dec-b8c8-a4280b60d0f7",
+      "name": "no_access",
+      "permissionIds": []
     }
   ],
   "permissions": [
     {
       "id": "1",
-      "name": "create_role"
+      "name": "create_user"
     },
     {
       "id": "2",
-      "name": "view_role"
+      "name": "view_user"
     },
     {
       "id": "3",
-      "name": "edit_role"
+      "name": "edit_user"
     },
     {
       "id": "4",
-      "name": "delete_role"
+      "name": "delete_user"
     }
   ],
   "features": [
