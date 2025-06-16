@@ -1,0 +1,21 @@
+<div class="modal-container">
+    <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Add' }} Role</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-container">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required />
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Permissions</mat-label>
+        <mat-select formControlName="permissionIds" multiple>
+          <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <div class="flex gap-2 mt-4">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-button (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </form>
+</div>

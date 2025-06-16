@@ -1,0 +1,115 @@
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import {jwtDecode, JwtPayload} from 'jwt-decode';
+
+export interface User {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  roleId?: number;
+  role: string;
+}
+export interface Role {
+  id: string;
+  name: string;
+  permissionIds: number[];
+}
+export interface Permission {
+  id: number;
+  name: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private readonly apiUrl = environment.apiUrl;
+  private tokenKey = environment.tokenKey;
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser = this.currentUserSubject.asObservable();
+
+
+  constructor(private http: HttpClient,private router: Router) {
+   }
+
+   login(username: string, password: string): Observable<{ users: User[] }> {
+    return this.http.get<{ users: User[] }>(`${this.apiUrl}/users?username=${username}&password=${password}`)
+      .pipe(
+        tap((res: { users: User[] }) => {
+          if (res.users && res.users.length > 0) {
+            const user = res.users[0];
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          }
+        })
+      );
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users`);
+  }
+
+  getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.apiUrl}/roles`);
+  }
+
+  getPermissions(): Observable<Permission[]> {
+    return this.http.get<Permission[]>(`${this.apiUrl}/permissions`);
+  }
+
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/users`, user);
+  }
+  updateUser(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/users/${id}`, user);
+  }
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/users/${id}`);
+  }
+
+  addRole(role: Role): Observable<Role> {
+    return this.http.post<Role>(`${this.apiUrl}/roles`, role);
+  }
+
+  updateRole(roleId: number, role: Role): Observable<Role> {
+    return this.http.put<Role>(`${this.apiUrl}/roles/${roleId}`, role);
+  }
+
+  deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/roles/${roleId}`);
+  }
+
+  getRolePermissions(roleId: number): Observable<Permission[]> {
+    return this.http.get<Permission[]>(`${this.apiUrl}/roles/${roleId}/permissions`);
+  }
+
+  addRolePermission(roleId: number, permissionId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/roles/${roleId}/permissions`, { permissionId });
+  }
+
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('user');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(this.tokenKey) && !!localStorage.getItem('user');
+  }
+
+  private decodeToken(token: string): User | null {
+    try {
+      return jwtDecode<User>(token);
+    } catch (error) {
+      console.error('Invalid token', error);
+      return null;
+    }
+  }
+
+}

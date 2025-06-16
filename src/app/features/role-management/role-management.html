@@ -1,0 +1,49 @@
+<div>
+    <button mat-raised-button color="primary" (click)="openForm()">Add Role</button>
+  
+    <table mat-table [dataSource]="roles">
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let role">{{ role.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="permissions">
+        <th mat-header-cell *matHeaderCellDef>Permissions</th>
+        <td mat-cell *matCellDef="let role">
+          <mat-chip-set>
+            <mat-chip *ngFor="let permission of role.permissionIds" color="primary" variant="outlined">
+              {{ permissionMap.get(permission.toString()) }}
+            </mat-chip>
+          </mat-chip-set>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let role">
+          <button mat-icon-button (click)="openForm(role)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteRole(role.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr *ngIf="isLoading">
+        <td [attr.colspan]="displayedColumns.length" class="loading-row">
+          <mat-spinner diameter="40"></mat-spinner>
+        </td>
+      </tr>
+
+      <tr *ngIf="!isLoading && roles.length === 0">
+        <td [attr.colspan]="displayedColumns.length" class="no-data-row">
+            No roles found
+        </td>
+      </tr>
+    </table>
+</div>

@@ -1,0 +1,29 @@
+<div class="modal-container">
+    <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Add' }} User</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-container">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required />
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required />
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <select matNativeControl required formControlName="role">
+          <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
+        </select>
+      </mat-form-field>
+      <div class="flex gap-2 mt-4">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-button (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </form>
+</div>

@@ -1,0 +1,97 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "asdf",
+      "username": "asdf",
+      "email": "ssdf@asdf.com",
+      "password": "",
+      "role": "User"
+    },
+    {
+      "id": 1,
+      "name": "sdf",
+      "username": "admin",
+      "email": "asdflasdf@asdf.com",
+      "password": "",
+      "role": "Super Admin"
+    },
+    {
+      "id": 2,
+      "name": "asdf",
+      "username": "asdf",
+      "email": "asdf@asdf.com",
+      "password": "",
+      "role": "Admin"
+    },
+    {
+      "id": "79db64b6-2940-4c2f-9def-a24755e0f3ae",
+      "name": "sdfs",
+      "username": "",
+      "email": "sdf@sadf.com",
+      "password": "",
+      "role": "Super Admin"
+    }
+  ],
+  "roles": [
+    {
+      "id": "0",
+      "name": "Super Admin",
+      "permissionIds": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "1093947f-627b-474a-9473-7be6d95fa209",
+      "name": "admin",
+      "permissionIds": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "151398cd-99b2-48d7-9724-ed007d92bd36",
+      "name": "user",
+      "permissionIds": [
+        "1"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "id": "1",
+      "name": "create_role"
+    },
+    {
+      "id": "2",
+      "name": "view_role"
+    },
+    {
+      "id": "3",
+      "name": "edit_role"
+    },
+    {
+      "id": "4",
+      "name": "delete_role"
+    }
+  ],
+  "features": [
+    {
+      "id": "1",
+      "name": "Dashboard",
+      "permissionId": 1
+    },
+    {
+      "id": "2",
+      "name": "Role Management",
+      "permissionId": 2
+    },
+    {
+      "id": "3",
+      "name": "User Management",
+      "permissionId": 2
+    }
+  ]
+}
