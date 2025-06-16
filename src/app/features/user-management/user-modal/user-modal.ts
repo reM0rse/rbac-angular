@@ -32,6 +32,7 @@ export class UserModal implements OnInit{
     username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     role: ['', Validators.required],
+    password: ['default123'],
   });
 
   http = inject(HttpClient);
@@ -57,7 +58,7 @@ export class UserModal implements OnInit{
       name: this.form.value.name || '',
       username: this.form.value.username || '',
       email: this.form.value.email || '',
-      password: '',
+      password: this.form.value.password || '',
       role: this.form.value.role || '',
       permissionIds: this.roles.find(role => role.name === this.form.value.role)?.permissionIds || [],
     }).subscribe((data) => {

@@ -16,8 +16,12 @@ import { RoleModal } from './role-modal/role-modal';
 interface User {
   id: string;
   name: string;
+  username: string;
   email: string;
+  password?: string;
+  roleId?: string;
   role: string;
+  permissionIds?: string[];
 }
 
 interface Role {

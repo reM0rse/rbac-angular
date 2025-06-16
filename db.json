@@ -36,6 +36,30 @@
       "role": "no_access",
       "roleId": "d23e0660-53e6-4dec-b8c8-a4280b60d0f7",
       "permissionIds": []
+    },
+    {
+      "id": "06bf1a98-018f-43e6-b6a8-f0ceda615843",
+      "name": "admin",
+      "username": "admin",
+      "email": "admin@admin.com",
+      "password": "admin123",
+      "role": "admin",
+      "permissionIds": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "05c17be3-4a1c-4926-ba44-65458e66cccd",
+      "name": "users",
+      "username": "user123",
+      "email": "suer@sdf.com",
+      "password": "default123",
+      "role": "user",
+      "permissionIds": [
+        "2"
+      ]
     }
   ],
   "roles": [
