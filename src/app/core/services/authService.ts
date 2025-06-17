@@ -3,27 +3,8 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap, map } from 'rxjs';
-import {jwtDecode, JwtPayload} from 'jwt-decode';
-
-export interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-  roleId?: string;
-  role: string;
-  permissionIds?: string[];
-}
-export interface Role {
-  id: string;
-  name: string;
-  permissionIds: string[];
-}
-export interface Permission {
-  id: string;
-  name: string;
-}
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { User, Role, Permission } from '../../shared/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -6,9 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService, Role, Permission } from '../../../core/services/authService';
+import { AuthService } from '../../../core/services/authService';
 import { v4 as uuidv4 } from 'uuid';
 import { MatSelectModule } from '@angular/material/select';
+import { User, Role, Permission } from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-role-modal',

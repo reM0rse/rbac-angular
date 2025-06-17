@@ -8,27 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
-import { AuthService, Permission } from '../../core/services/authService';
+import { AuthService } from '../../core/services/authService';
 import { SnackbarUtil } from '../../core/utils/snackbar.util';
 import { ConfirmModal, ConfirmModalData } from '../../shared/components/confirm-modal/confirm-modal';
 import { RoleModal } from './role-modal/role-modal';
-
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  password?: string;
-  roleId?: string;
-  role: string;
-  permissionIds?: string[];
-}
-
-interface Role {
-  id: string;
-  name: string;
-  permissionIds: number[];
-}
+import { User, Role, Permission } from '../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-role-management',
