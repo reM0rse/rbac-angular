@@ -8,10 +8,11 @@ import { UserModal } from './user-modal/user-modal';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService, User } from '../../core/services/authService';
+import { AuthService} from '../../core/services/authService';
 import { Role, Permission } from '../../shared/utils/enum';
 import { SnackbarUtil } from '../../core/utils/snackbar.util';
 import { ConfirmModal, ConfirmModalData } from '../../shared/components/confirm-modal/confirm-modal';
+import { User } from '../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-user-management',
