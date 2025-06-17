@@ -69,13 +69,11 @@ export class RoleManagement implements OnInit {
   fetchPermissions() {
     this.authservice.getPermissions().subscribe({
       next: (data) => {
-        console.log('Permissions:', data);
         this.permissions = data;
         this.permissions.forEach(permission => {
           this.permissionMap.set(permission.id.toString(), permission.name);
         });
-        console.log('Permission Map:', this.permissionMap);
-        console.log('Permission Map: 2', this.permissionMap.get("1"));
+
       },
       error: (error) => {
         console.error('Error fetching permissions:', error);
@@ -88,7 +86,6 @@ export class RoleManagement implements OnInit {
     this.isLoading = true;
     this.authservice.getRoles().subscribe({
       next: (data) => {
-        console.log('Roles:', data);
         this.roles = data;
         this.isLoading = false;
         this.cdr.detectChanges();

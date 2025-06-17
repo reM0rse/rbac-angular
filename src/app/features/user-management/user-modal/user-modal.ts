@@ -39,7 +39,6 @@ export class UserModal implements OnInit{
   dialogRef = inject(MatDialogRef<UserModal>);
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private authservice: AuthService) {
-    console.log('Modal Data:', data); 
     this.isEditMode = !!data;
     if (data) {
       this.form.patchValue(data);

@@ -54,7 +54,6 @@ export class UserManagement implements OnInit {
   }
 
   canDeleteUser(): boolean {
-    console.log(this.currentUser, 'currentUser is');
     return this.currentUser?.permissionIds?.includes(Permission.delete_user) ?? false;
   }
 

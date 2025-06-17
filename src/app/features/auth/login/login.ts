@@ -76,20 +76,20 @@ export class LoginComponent implements OnInit {
 
       if (username && password) {
         this.authService.login(username!, password!).subscribe({
-          next: (data) => {
-            if(Array.isArray(data) && data.length > 0){
+          next: (user) => {
+            if (user) {
               this.snackbar.success('Login successful!');
               this.isLoading = false;
               this.router.navigate(['/dashboard']);
-              const user = data[0];
-              delete user.password;
-              localStorage.setItem('user', JSON.stringify(user));
-              // this.getPermissions(user.roleId || '');
+              const {password, ...userWithoutPassword} = user;
+              localStorage.setItem('user', JSON.stringify(userWithoutPassword));
             } else {
               this.snackbar.error('Login failed!');
+              this.isLoading = false;
             }
           },
           error: (err) => {
+            console.error('Login error:', err);
             this.isLoading = false;
             this.snackbar.error('Login failed!');
           },

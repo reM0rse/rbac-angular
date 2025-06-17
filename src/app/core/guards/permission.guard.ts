@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/authService';
-import { map, take } from 'rxjs/operators';
 import { SnackbarUtil } from '../utils/snackbar.util';
 
 export const permissionGuard: CanActivateFn = (route, state) => {
@@ -10,23 +9,19 @@ export const permissionGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const requiredPermission = route.data['permission'];
 
-  return authService.currentUser.pipe(
-    take(1),
-    map(user => {
-        console.log(user, 'user is');
-      if (!user) {
-        router.navigate(['/login']);
-        return false;
-      }
+  const currentUser = authService.currentUserValue;
 
-      const hasPermission = user.permissionIds?.includes(requiredPermission);
-      if (!hasPermission) {
-        console.log('You do not have permission to access this page');
-        snackbar.error('You do not have permission to access this page');
-        return false;
-      }
+  if (!currentUser) {
+    router.navigate(['/login']);
+    return false;
+  }
 
-      return true;
-    })
-  );
+  const hasPermission = currentUser.permissionIds?.includes(requiredPermission);
+
+  if (!hasPermission) {
+    snackbar.error('You do not have permission to access this page');
+    return false;
+  }
+
+  return true;
 }; 

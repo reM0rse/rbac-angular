@@ -39,7 +39,6 @@ export class RoleModal implements OnInit{
     dialogRef = inject(MatDialogRef<RoleModal>);
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private authservice: AuthService) {
-    console.log('Modal Data:', data); 
     this.isEditMode = !!data;
     if (data) {
       this.form.patchValue(data);

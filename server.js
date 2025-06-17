@@ -7,7 +7,7 @@ server.use(jsonServer.bodyParser)
 
 server.post('/login', (req, res) => {
   const { username, password } = req.body
-  const db = router.db // lowdb instance
+  const db = router.db 
   const user = db.get('users').find({ username, password }).value()
 
   if (user) {

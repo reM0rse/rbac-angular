@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import {jwtDecode, JwtPayload} from 'jwt-decode';
 
 export interface User {
@@ -34,6 +34,9 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser = this.currentUserSubject.asObservable();
 
+  get currentUserValue(): User | null {
+    return this.currentUserSubject.value;
+  }
 
   constructor(private http: HttpClient,private router: Router) {
     const storedUser = localStorage.getItem('user');
@@ -42,16 +45,17 @@ export class AuthService {
     }
   }
 
-   login(username: string, password: string): Observable<{ users: User[] }> {
-    return this.http.get<{ users: User[] }>(`${this.apiUrl}/users?username=${username}&password=${password}`)
+   login(username: string, password: string): Observable<User> {
+    return this.http.get<User[]>(`${this.apiUrl}/users?username=${username}&password=${password}`)
       .pipe(
-        tap((res: { users: User[] }) => {
-          if (res.users && res.users.length > 0) {
-            const user = res.users[0];
+        tap((users: User[]) => {
+          if (users && users.length > 0) {
+            const user = users[0];
             localStorage.setItem('user', JSON.stringify(user));
             this.currentUserSubject.next(user);
           }
-        })
+        }),
+        map(users => users[0])
       );
   }
 
