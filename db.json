@@ -49,17 +49,6 @@
         "2",
         "3"
       ]
-    },
-    {
-      "id": "05c17be3-4a1c-4926-ba44-65458e66cccd",
-      "name": "users",
-      "username": "user123",
-      "email": "suer@sdf.com",
-      "password": "default123",
-      "role": "user",
-      "permissionIds": [
-        "2"
-      ]
     }
   ],
   "roles": [
